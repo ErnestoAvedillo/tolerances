@@ -7,7 +7,7 @@ convert it to a base64-encoded PNG image.
 from matplotlib import pyplot as plt
 import base64
 import io
-from pytol.dimension import Dimension
+from .dimension import Dimension
 
 
 class Hystogram:

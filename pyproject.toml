@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pytol"
-version = "0.0.1"
+name = "pytolerance"
+version = "0.0.2"
 description = "This is a tool to generate tolerance calculations"
 readme = "README.md"
 requires-python = ">=3.13"

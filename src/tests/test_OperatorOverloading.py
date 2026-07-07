@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
-from pytol.dimension import (GausianDimensionGenerator,
+from pytolerance.dimension import (GausianDimensionGenerator,
                                 SkewedDimensionGenerator)
-from pytol.hystogram import Hystogram
+from pytolerance.hystogram import Hystogram
 
 sys.path.insert(0, str(Path(__file__).parents[2]))
 # Crear dos dimensiones gaussianas

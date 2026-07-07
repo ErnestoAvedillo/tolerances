@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
-from pytol.dimension import GausianDimensionGenerator
-from pytol.hystogram import Hystogram
+from pytolerance.dimension import GausianDimensionGenerator
+from pytolerance.hystogram import Hystogram
 
 sys.path.insert(0, str(Path(__file__).parents[2]))
 

@@ -1,4 +1,4 @@
-# pytol
+# pytolerance
 
 ## 🎯 Description
 
@@ -7,13 +7,13 @@ Python library designed for Tolerance Stack-up analysis using Monte Carlo simula
 ## 🚀 Key Features
 
 Monte Carlo Simulation: Statistical precision for non-linear distributions.
-Distribution Support: Supports various distributions (e.g., Normal, Uniform, Triangular, etc.).
+Distribution Support: Currently only supports Gausian distribution but is planned to include Uniform, Triangular ...
 Sensitivity Analysis: Identify which tolerances have the greatest impact on your results.
 Lightweight & Fast: Optimized for iterative calculations.
 
 ## 📦 Installation
 
-    pip install pytol
+    pip install pytoleranceerance
 
 ## 🛠️ Quick Start
 

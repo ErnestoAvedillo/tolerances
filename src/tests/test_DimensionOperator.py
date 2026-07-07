@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from pytol.dimension import GausianDimensionGenerator, DimensionOperator
+from pytolerance.dimension import GausianDimensionGenerator, DimensionOperator
 sys.path.insert(0, str(Path(__file__).parents[2]))
 
 # Crear dos dimensiones gaussianas
