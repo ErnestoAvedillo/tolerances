@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
-from pymodels.dimension import (GausianDimensionGenerator,
+from pytol.dimension import (GausianDimensionGenerator,
                                 SkewedDimensionGenerator)
-from pymodels.hystogram import Hystogram
+from pytol.hystogram import Hystogram
 
 sys.path.insert(0, str(Path(__file__).parents[2]))
 # Crear dos dimensiones gaussianas

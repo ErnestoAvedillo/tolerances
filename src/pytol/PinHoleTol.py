@@ -1,7 +1,7 @@
 from pydantic import model_validator
 from pint import UnitRegistry
 from typing import Optional
-from pymodels.dimension import Dimension, GausianDimensionGenerator
+from pytol.dimension import Dimension, GausianDimensionGenerator
 unit = UnitRegistry()
 
 

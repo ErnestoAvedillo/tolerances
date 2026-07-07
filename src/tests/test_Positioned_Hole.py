@@ -1,7 +1,7 @@
-from pymodels.dimension import Dimension
-from pymodels.position import SquaredPosition
-from pymodels.positioned_hole import PositionedHole
-from pymodels.hystogram import Hystogram
+from pytol.dimension import Dimension
+from pytol.position import SquaredPosition
+from pytol.positioned_hole import PositionedHole
+from pytol.hystogram import Hystogram
 
 SAMPLES = 100000
 Hole_position_1 = SquaredPosition(nominal_x=0,

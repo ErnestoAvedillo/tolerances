@@ -1,5 +1,5 @@
-from pymodels.dimension import Dimension
-from pymodels.hystogram import Hystogram
+from pytol.dimension import Dimension
+from pytol.hystogram import Hystogram
 SAMPLES = 100000
 cota1 = Dimension(nominal=10,
                   tol_sup=0.5,
