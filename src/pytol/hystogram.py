@@ -129,7 +129,7 @@ class Hystogram:
         if self.hyst_plot is not None:
             self.hyst_plot.show()
         else:
-            print("No se ha generado el histograma."
+            raise ValueError("No se ha generado el histograma."
                   "Por favor, llama al método plot() antes de show().")
 
     def plot_to_base64_png(self):

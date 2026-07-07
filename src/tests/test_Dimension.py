@@ -1,20 +1,20 @@
-from pymodels.dimension import GausianDimensionGenerator
+from pymodels.dimension import Dimension
 from pymodels.hystogram import Hystogram
 SAMPLES = 100000
-cota1 = GausianDimensionGenerator(nominal=10,
-                                  tol_sup=0.5,
-                                  tol_inf=0,
-                                  CP=2,
-                                  number_samples=SAMPLES)
-cota2 = GausianDimensionGenerator(nominal=11,
-                                  tol_sup=0,
-                                  tol_inf=-0.5,
-                                  CP=2,
-                                  number_samples=SAMPLES)
+cota1 = Dimension(nominal=10,
+                  tol_sup=0.5,
+                  tol_inf=0,
+                  CP=2,
+                  number_samples=SAMPLES)
+cota2 = Dimension(nominal=11,
+                  tol_sup=0,
+                  tol_inf=-0.5,
+                  CP=2,
+                  number_samples=SAMPLES)
 
-result = cota1.vector_samples - cota2.vector_samples
-print(f"Mean: {result.mean():.4f} mm")
-print(f"Sigma: {result.std():.4f} mm")
+result = cota1 - cota2
+print(f"Mean: {result.mean:.4f} mm")
+print(f"Sigma: {result.sigma:.4f} mm")
 
 hist = Hystogram(
     dimension=result,
@@ -23,4 +23,4 @@ hist = Hystogram(
     ylabel="Density",
     title="Distribution with Tolerance Limits"
 )
-hist.plot()
+hist.show_plot()
