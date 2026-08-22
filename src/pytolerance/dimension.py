@@ -23,12 +23,26 @@ class Dimension(BaseModel):
 
     def calc_dpmo(self):
         """
-        Calcula el DPMO para una distribución normal
-        con tolerancias asimétricas.
+        Calcula el DPMO (Defectos Por Millón de Oportunidades) para una
+        distribución normal con tolerancias asimétricas.
+
+        Los límites de especificación son ``nominal + tol_inf`` (inferior) y
+        ``nominal + tol_sup`` (superior), no las tolerancias en crudo.
         """
-        p_lower = norm.cdf(self.tol_inf, loc=self.mean, scale=self.sigma)
-        p_upper = 1 - norm.cdf(self.tol_sup, loc=self.mean, scale=self.sigma)
-        self.dpmo = (p_lower + p_upper) * 1_000_000
+        mean = self.mean.magnitude
+        sigma = self.sigma.magnitude
+        lower = (self.nominal + self.tol_inf).magnitude
+        upper = (self.nominal + self.tol_sup).magnitude
+
+        # Sin variación no hay distribución que integrar: es defectuoso solo
+        # si la media cae fuera de los límites.
+        if sigma <= 0:
+            self.dpmo = 0.0 if lower <= mean <= upper else 1_000_000.0
+            return self.dpmo
+
+        p_lower = norm.cdf(lower, loc=mean, scale=sigma)
+        p_upper = 1 - norm.cdf(upper, loc=mean, scale=sigma)
+        self.dpmo = float((p_lower + p_upper) * 1_000_000)
         return self.dpmo
 
     def __add__(self, other: 'Dimension') -> 'Dimension':
@@ -52,8 +66,8 @@ class Dimension(BaseModel):
         # Crear nueva dimensión resultado
         result = GausianDimensionGenerator(
             nominal=nominal_sum,
-            tol_sup_sum=tol_sup_sum,
-            tol_inf_sum=tol_inf_sum,
+            tol_sup=tol_sup_sum,
+            tol_inf=tol_inf_sum,
             CP=cp_result,
             number_samples=num_samples
 
@@ -66,6 +80,7 @@ class Dimension(BaseModel):
             result.vector_samples = self.vector_samples + other.vector_samples
             result.mean = result.vector_samples.mean() * ureg.mm
             result.sigma = result.vector_samples.std() * ureg.mm
+            result.calc_dpmo()
 
         return result
 
@@ -100,11 +115,12 @@ class Dimension(BaseModel):
             result.vector_samples = self.vector_samples - other.vector_samples
             result.mean = result.vector_samples.mean() * ureg.mm
             result.sigma = result.vector_samples.std() * ureg.mm
+            result.calc_dpmo()
 
         return result
 
     def __truediv__(self, other) -> 'Dimension':
-        """Resta dos dimensiones usando el operador -"""
+        """Divide una dimensión por un escalar usando el operador /"""
 
         if not isinstance(other, (int, float)):
             return NotImplemented
@@ -132,6 +148,7 @@ class Dimension(BaseModel):
             result.vector_samples = self.vector_samples / other
             result.mean = result.vector_samples.mean() * ureg.mm
             result.sigma = result.vector_samples.std() * ureg.mm
+            result.calc_dpmo()
         return result
 
     def model_post_init(self, __context: Any) -> None:
@@ -174,6 +191,7 @@ class GausianDimensionGenerator(Dimension):
         self.vector_samples = random.normal(loc=self.mean.magnitude,
                                             scale=self.sigma.magnitude,
                                             size=self.number_samples)
+        self.calc_dpmo()
 
 
 class SkewedDimensionGenerator(Dimension):
@@ -183,7 +201,7 @@ class SkewedDimensionGenerator(Dimension):
     def model_post_init(self, __context: Any) -> None:
         """Calculate Mean and Sigma based on tolerances
         (similar to your Gaussian logic)"""
-        self.mean = self.nominal + (self.tol_sup - self.tol_inf) / 2
+        self.mean = self.nominal + (self.tol_sup + self.tol_inf) / 2
         self.sigma = (self.tol_sup - self.tol_inf) / 6 / self.CP
 
         # 'a' is the shape parameter for skewnorm
@@ -198,3 +216,4 @@ class SkewedDimensionGenerator(Dimension):
         )
 
         self.vector_samples = samples_raw
+        self.calc_dpmo()

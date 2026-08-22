@@ -1,12 +1,9 @@
 from .dimension import Dimension
 from pydantic import BaseModel
-from pint import UnitRegistry
 from typing import Optional
 from numpy import ndarray
-from .convert import PintQuantity
+from .convert import PintQuantity, ureg
 import numpy as np
-
-ureg = UnitRegistry()
 
 
 class SquaredPosition(BaseModel):
@@ -46,9 +43,10 @@ class SquaredPosition(BaseModel):
         tolerance = self.tol + other.tol
 
         result = SquaredPosition(
-            nominal_x,
-            nominal_y,
-            tolerance
+            nominal_x=nominal_x,
+            nominal_y=nominal_y,
+            tol=tolerance,
+            number_samples=self.number_samples
         )
         return result
 

@@ -13,27 +13,27 @@ Lightweight & Fast: Optimized for iterative calculations.
 
 ## 📦 Installation
 
-    pip install pytoleranceerance
+    pip install pytolerance
 
 ## 🛠️ Quick Start
 
 ## 📏 Define your dimensions
 
-    from dimension import Dimension
+    from pytolerance.dimension import Dimension
 
     SAMPLES = 100000
 
-    diemsion1 = Dimension(nominal=10,
-                                    tol_sup=0.5,
-                                    tol_inf=0,
-                                    CP=2,
-                                    number_samples=SAMPLES)
+    dimension1 = Dimension(nominal=10,
+                           tol_sup=0.5,
+                           tol_inf=0,
+                           CP=2,
+                           number_samples=SAMPLES)
 
     dimension2 = Dimension(nominal=11,
-                                    tol_sup=0,
-                                    tol_inf=-0.5,
-                                    CP=2,
-                                    number_samples=SAMPLES)
+                           tol_sup=0,
+                           tol_inf=-0.5,
+                           CP=2,
+                           number_samples=SAMPLES)
 
 ## 📊 Perform the operation
 
@@ -44,7 +44,7 @@ Lightweight & Fast: Optimized for iterative calculations.
     print(f"Mean: {result.mean:.4f} mm")
     print(f"Sigma: {result.std:.4f} mm")
 
-    from hystogram import Hystogram
+    from pytolerance.hystogram import Hystogram
 
     hist = Hystogram(
         dimension=result,
@@ -55,7 +55,7 @@ Lightweight & Fast: Optimized for iterative calculations.
     )
     hist.show_plot()
 
-![Sample of image to be shown](./images/Hystogram.png)
+![Sample of image to be shown](./images/Screenshot%20from%202026-07-07%2007-23-19.png)
 
 ⚙️ Technical Requirements
 
