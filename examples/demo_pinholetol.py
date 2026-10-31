@@ -1,4 +1,4 @@
-from pytol.PinHoleTol import PinHoleTol
+from pytolerance.PinHoleTol import PinHoleTol
 
 # Example: H7/g6 fit (Clearance fit)
 pin_hole = PinHoleTol(
